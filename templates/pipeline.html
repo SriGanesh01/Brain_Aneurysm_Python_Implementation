@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aneurysm Detection Pipeline Output</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Aneurysm Detection Pipeline Output</h1>
+      <p>Explore interactive charts and outputs from the complete aneurysm detection pipeline.</p>
+      <a href="/pipeline" class="button">Run Pipeline Again</a>
+    </div>
+  </header>
+  
+  <section id="logs">
+    <div class="container">
+      <h2>Log Output & Comments</h2>
+      <p class="explanation">This section details the progress of data loading, cleaning, and model execution. Scroll and review the logs below.</p>
+      <pre>{{ logs }}</pre>
+    </div>
+  </section>
+  
+  <section id="tables">
+    <div class="container">
+      <h2>Data Tables</h2>
+      <p class="explanation">Overview tables such as basic statistics and dataset summaries are shown here. Click on each title to toggle details.</p>
+      {% for title, table in tables.items() %}
+        <div class="table-container">
+          <h3 class="table-title">{{ title }}</h3>
+          <div class="table-output">{{ table|safe }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+  <section id="plots">
+    <div class="container">
+      <h2>Interactive Plots</h2>
+      <p class="explanation">Hover over the plots to view values and interact with the charts. The graphs below update dynamically.</p>
+      {% for plot in images %}
+        <div class="plot">
+          <h3 class="plot-title">{{ plot.title }}</h3>
+          {% if plot.type == 'plotly' %}
+            <div class="plot-container">
+              {{ plot.html|safe }}
+            </div>
+          {% else %}
+            <div class="plot-container">
+              {{ plot.html|safe }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Aneurysm Detection Project by Your Name.</p>
+    </div>
+  </footer>
+  
+  <!-- JavaScript for UI enhancements -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
